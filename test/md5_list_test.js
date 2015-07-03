@@ -4,24 +4,24 @@ var grunt = require('grunt');
 var crypto = require('crypto');
 
 /*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
+ ======== A Handy Little Nodeunit Reference ========
+ https://github.com/caolan/nodeunit
 
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
+ Test methods:
+ test.expect(numAssertions)
+ test.done()
+ Test assertions:
+ test.ok(value, [message])
+ test.equal(actual, expected, [message])
+ test.notEqual(actual, expected, [message])
+ test.deepEqual(actual, expected, [message])
+ test.notDeepEqual(actual, expected, [message])
+ test.strictEqual(actual, expected, [message])
+ test.notStrictEqual(actual, expected, [message])
+ test.throws(block, [error], [message])
+ test.doesNotThrow(block, [error], [message])
+ test.ifError(value)
+ */
 
 exports.md5_list = {
   setUp: function(done) {
@@ -48,4 +48,14 @@ exports.md5_list = {
     test.equal(result['data/1']['hash'], hash);
     test.done();
   },
+    custom_options_with_ext: function(test) {
+        test.expect(2);
+
+        var result = grunt.file.readJSON('tmp/custom_options_with_ext/hash.json');
+        var content = grunt.file.read('test/data/1.txt');
+        var hash = crypto.createHash('sha1').update(content).digest('hex');
+        test.ok(grunt.file.exists('tmp/custom_options_with_ext/data/1-' + hash + '.txt'));
+        test.equal(result['data/1']['hash'], hash);
+        test.done();
+    }
 };

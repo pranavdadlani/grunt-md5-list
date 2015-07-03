@@ -52,6 +52,19 @@ module.exports = function(grunt) {
           src: ['data/*.txt'],
           dest: 'tmp/custom_options/'
         }]
+      },
+      custom_options_with_ext: {
+        options: {
+          output: 'tmp/custom_options_with_ext/hash.json',
+          algorithm:'sha1',
+          withExtension :true
+        },
+        files: [{
+          expand: true,
+          cwd: 'test',
+          src: ['data/*.txt'],
+          dest: 'tmp/custom_options_with_ext/'
+        }]
       }
     },
 
@@ -72,7 +85,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'md5_list', 'nodeunit', 'clean']);
+  grunt.registerTask('test', ['clean', 'md5_list', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
